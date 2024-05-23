@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,33 +19,38 @@
   <link rel="stylesheet" href="../assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-  <?php 
+  <?php
   include '../koneksi.php';
   date_default_timezone_set('Asia/Jakarta');
   session_start();
-  if($_SESSION['status'] != "kasir_logedin"){
+  if ($_SESSION['status'] != "kasir_logedin") {
     header("location:../index.php?alert=belum_login");
   }
   ?>
 
 </head>
+
 <body class="hold-transition skin-green layout-top-nav">
 
   <style>
     #table-datatable {
       width: 100% !important;
     }
-    #table-datatable .sorting_disabled{
+
+    #table-datatable .sorting_disabled {
       border: 1px solid #f4f4f4;
     }
-    .dropdown-menu > li > a {
+
+    .dropdown-menu>li>a {
       padding: 8px 20px;
     }
 
-    input[type="date"].form-control, input[type="time"].form-control, input[type="datetime-local"].form-control, input[type="month"].form-control {
+    input[type="date"].form-control,
+    input[type="time"].form-control,
+    input[type="datetime-local"].form-control,
+    input[type="month"].form-control {
       line-height: 15px;
     }
-      
   </style>
 
   <div class="wrapper">
@@ -93,7 +99,6 @@
                 </ul>
               </li>
 
-
               <li>
                 <a href="laporan.php">
                   <i class="fa fa-file"></i> &nbsp; <span>LAPORAN</span>
@@ -106,16 +111,21 @@
                 </a>
               </li>
 
-            </ul>
+              <li>
+                <a href="hutang.php">
+                  <i class="fa fa-file"></i> &nbsp; <span>Hutang</span>
+                </a>
+              </li>
 
+            </ul>
 
           </div>
 
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
-              <?php 
-              $limit = mysqli_query($koneksi,"select * from produk where produk_stok<=5");
+              <?php
+              $limit = mysqli_query($koneksi, "select * from produk where produk_stok<=5");
               $jumlah_limit = mysqli_num_rows($limit);
               ?>
               <li class="dropdown notifications-menu">
@@ -127,8 +137,8 @@
                   <li class="header text-center">Ada <b><?php echo $jumlah_limit; ?></b> produk yang hampir habis.</li>
                   <li>
                     <ul class="menu">
-                      <?php 
-                      while($l = mysqli_fetch_array($limit)){ ?>
+                      <?php
+                      while ($l = mysqli_fetch_array($limit)) { ?>
                         <li>
                           <a href="produk.php">
                             <i class="fa fa-archive text-red"></i> <b><?php echo $l['produk_nama'] ?></b> <span class="pull-right">tersisa <b><?php echo $l['produk_stok']; ?></b></span>
@@ -143,14 +153,14 @@
 
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <?php 
+                  <?php
                   $id_kasir = $_SESSION['id'];
-                  $profil = mysqli_query($koneksi,"select * from kasir where kasir_id='$id_kasir'");
+                  $profil = mysqli_query($koneksi, "select * from kasir where kasir_id='$id_kasir'");
                   $profil = mysqli_fetch_assoc($profil);
-                  if($profil['kasir_foto'] == ""){ 
-                    ?>
+                  if ($profil['kasir_foto'] == "") {
+                  ?>
                     <img src="../gambar/sistem/kasir.png" class="user-image">
-                  <?php }else{ ?>
+                  <?php } else { ?>
                     <img src="../gambar/kasir/<?php echo $profil['kasir_foto'] ?>" class="user-image">
                   <?php } ?>
                   <span class="hidden-xs"><?php echo $_SESSION['nama']; ?> - KASIR</span>

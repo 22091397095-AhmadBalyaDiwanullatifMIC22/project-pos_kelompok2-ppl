@@ -20,12 +20,12 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-red">
           <div class="inner">
-            <?php 
+            <?php
             $tanggal = date('Y-m-d');
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total_invoice FROM invoice WHERE invoice_tanggal='$tanggal'");
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total_invoice FROM invoice WHERE invoice_tanggal='$tanggal'");
             $p = mysqli_fetch_assoc($penjualan);
             ?>
-            <h4 style="font-weight: bolder"><?php echo "Rp. ".number_format($p['total_invoice'])." ,-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp. " . number_format($p['total_invoice']) . " ,-" ?></h4>
             <p>Penjualan Hari Ini</p>
           </div>
           <div class="icon">
@@ -37,12 +37,12 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-blue">
           <div class="inner">
-            <?php 
+            <?php
             $bulan = date('m');
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total FROM invoice WHERE month(invoice_tanggal)='$bulan'");
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total FROM invoice WHERE month(invoice_tanggal)='$bulan'");
             $p = mysqli_fetch_assoc($penjualan);
             ?>
-            <h4 style="font-weight: bolder"><?php echo "Rp. ".number_format($p['total'])." ,-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp. " . number_format($p['total']) . " ,-" ?></h4>
             <p>Penjualan Bulan Ini</p>
           </div>
           <div class="icon">
@@ -54,12 +54,12 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-yellow">
           <div class="inner">
-            <?php 
+            <?php
             $tahun = date('Y');
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total FROM invoice WHERE year(invoice_tanggal)='$tahun'");
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total FROM invoice WHERE year(invoice_tanggal)='$tahun'");
             $p = mysqli_fetch_assoc($penjualan);
             ?>
-            <h4 style="font-weight: bolder"><?php echo "Rp. ".number_format($p['total'])." ,-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp. " . number_format($p['total']) . " ,-" ?></h4>
             <p>Penjualan Tahun Ini</p>
           </div>
           <div class="icon">
@@ -71,11 +71,11 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-black">
           <div class="inner">
-            <?php 
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total FROM invoice");
+            <?php
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total FROM invoice");
             $p = mysqli_fetch_assoc($penjualan);
             ?>
-            <h4 style="font-weight: bolder"><?php echo "Rp. ".number_format($p['total'])." ,-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp. " . number_format($p['total']) . " ,-" ?></h4>
             <p>Total Seluruh Penjualan</p>
           </div>
           <div class="icon">
@@ -84,28 +84,27 @@
         </div>
       </div>
 
-
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-red">
           <div class="inner">
-            <?php 
+            <?php
             $hari_ini = date('Y-m-d');
             $total_modal = 0;
-            $modal = mysqli_query($koneksi,"SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id and invoice_tanggal='$hari_ini'");
-            while($l = mysqli_fetch_array($modal)){
+            $modal = mysqli_query($koneksi, "SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id and invoice_tanggal='$hari_ini'");
+            while ($l = mysqli_fetch_array($modal)) {
               $m = $l['produk_harga_modal'] * $l['transaksi_jumlah'];
               $total_modal += $m;
             }
 
             $total_penjualan = 0;
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total_penjualan FROM invoice where invoice_tanggal='$hari_ini'");
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total_penjualan FROM invoice where invoice_tanggal='$hari_ini'");
             $p = mysqli_fetch_assoc($penjualan);
             $total_penjualan = $p['total_penjualan'];
 
-            $laba = $total_penjualan-$total_modal;
+            $laba = $total_penjualan - $total_modal;
             ?>
 
-            <h4 style="font-weight: bolder"><?php echo "Rp.".number_format($laba).",-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp." . number_format($laba) . ",-" ?></h4>
             <p>Laba Hari Ini</p>
           </div>
           <div class="icon">
@@ -117,24 +116,24 @@
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-blue">
           <div class="inner">
-            <?php 
+            <?php
             $bulan_ini = date('m');
             $total_modal = 0;
-            $modal = mysqli_query($koneksi,"SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id and month(invoice_tanggal)='$bulan_ini'");
-            while($l = mysqli_fetch_array($modal)){
+            $modal = mysqli_query($koneksi, "SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id and month(invoice_tanggal)='$bulan_ini'");
+            while ($l = mysqli_fetch_array($modal)) {
               $m = $l['produk_harga_modal'] * $l['transaksi_jumlah'];
               $total_modal += $m;
             }
 
             $total_penjualan = 0;
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total_penjualan FROM invoice where month(invoice_tanggal)='$bulan_ini'");
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total_penjualan FROM invoice where month(invoice_tanggal)='$bulan_ini'");
             $p = mysqli_fetch_assoc($penjualan);
             $total_penjualan = $p['total_penjualan'];
 
-            $laba = $total_penjualan-$total_modal;
+            $laba = $total_penjualan - $total_modal;
             ?>
 
-            <h4 style="font-weight: bolder"><?php echo "Rp.".number_format($laba).",-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp." . number_format($laba) . ",-" ?></h4>
             <p>Laba Bulan Ini</p>
           </div>
           <div class="icon">
@@ -143,28 +142,27 @@
         </div>
       </div>
 
-
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-yellow">
           <div class="inner">
-            <?php 
+            <?php
             $tahun_ini = date('Y');
             $total_modal = 0;
-            $modal = mysqli_query($koneksi,"SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id and year(invoice_tanggal)='$tahun_ini'");
-            while($l = mysqli_fetch_array($modal)){
+            $modal = mysqli_query($koneksi, "SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id and year(invoice_tanggal)='$tahun_ini'");
+            while ($l = mysqli_fetch_array($modal)) {
               $m = $l['produk_harga_modal'] * $l['transaksi_jumlah'];
               $total_modal += $m;
             }
 
             $total_penjualan = 0;
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total_penjualan FROM invoice where year(invoice_tanggal)='$tahun_ini'");
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total_penjualan FROM invoice where year(invoice_tanggal)='$tahun_ini'");
             $p = mysqli_fetch_assoc($penjualan);
             $total_penjualan = $p['total_penjualan'];
 
-            $laba = $total_penjualan-$total_modal;
+            $laba = $total_penjualan - $total_modal;
             ?>
 
-            <h4 style="font-weight: bolder"><?php echo "Rp.".number_format($laba).",-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp." . number_format($laba) . ",-" ?></h4>
             <p>Laba Tahun Ini</p>
           </div>
           <div class="icon">
@@ -173,29 +171,25 @@
         </div>
       </div>
 
-
-
-
-
       <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-black">
           <div class="inner">
-            <?php 
+            <?php
             $total_modal = 0;
-            $modal = mysqli_query($koneksi,"SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id");
-            while($l = mysqli_fetch_array($modal)){
+            $modal = mysqli_query($koneksi, "SELECT * FROM invoice,transaksi,produk where invoice_id=transaksi_invoice and transaksi_produk=produk_id");
+            while ($l = mysqli_fetch_array($modal)) {
               $m = $l['produk_harga_modal'] * $l['transaksi_jumlah'];
               $total_modal += $m;
             }
 
             $total_penjualan = 0;
-            $penjualan = mysqli_query($koneksi,"SELECT sum(invoice_total) as total_penjualan FROM invoice");
+            $penjualan = mysqli_query($koneksi, "SELECT sum(invoice_total) as total_penjualan FROM invoice");
             $p = mysqli_fetch_assoc($penjualan);
             $total_penjualan = $p['total_penjualan'];
 
-            $laba = $total_penjualan-$total_modal;
+            $laba = $total_penjualan - $total_modal;
             ?>
-            <h4 style="font-weight: bolder"><?php echo "Rp.".number_format($laba).",-" ?></h4>
+            <h4 style="font-weight: bolder"><?php echo "Rp." . number_format($laba) . ",-" ?></h4>
             <p>Total Seluruh Laba</p>
           </div>
           <div class="icon">
@@ -204,21 +198,14 @@
         </div>
       </div>
 
-
-
-
-
     </div>
-
-
-
 
     <div class="row">
       <div class="col-lg-2 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <?php 
-            $produk = mysqli_query($koneksi,"SELECT * from produk");
+            <?php
+            $produk = mysqli_query($koneksi, "SELECT * from produk");
             $p = mysqli_num_rows($produk);
             ?>
             <h4 style="font-weight: bolder"><?php echo $p ?></h4>
@@ -233,8 +220,8 @@
       <div class="col-lg-2 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <?php 
-            $kategori = mysqli_query($koneksi,"SELECT * from kategori");
+            <?php
+            $kategori = mysqli_query($koneksi, "SELECT * from kategori");
             $k = mysqli_num_rows($kategori);
             ?>
             <h4 style="font-weight: bolder"><?php echo $k ?></h4>
@@ -249,8 +236,8 @@
       <div class="col-lg-2 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <?php 
-            $pimpinan = mysqli_query($koneksi,"SELECT * from pimpinan");
+            <?php
+            $pimpinan = mysqli_query($koneksi, "SELECT * from pimpinan");
             $p = mysqli_num_rows($pimpinan);
             ?>
             <h4 style="font-weight: bolder"><?php echo $p ?></h4>
@@ -265,8 +252,8 @@
       <div class="col-lg-2 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <?php 
-            $user = mysqli_query($koneksi,"SELECT * from user");
+            <?php
+            $user = mysqli_query($koneksi, "SELECT * from user");
             $u = mysqli_num_rows($user);
             ?>
             <h4 style="font-weight: bolder"><?php echo $u ?></h4>
@@ -281,8 +268,8 @@
       <div class="col-lg-2 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <?php 
-            $kasir = mysqli_query($koneksi,"SELECT * from kasir");
+            <?php
+            $kasir = mysqli_query($koneksi, "SELECT * from kasir");
             $p = mysqli_num_rows($kasir);
             ?>
             <h4 style="font-weight: bolder"><?php echo $p ?></h4>
@@ -297,8 +284,8 @@
       <div class="col-lg-2 col-xs-6">
         <div class="small-box bg-green">
           <div class="inner">
-            <?php 
-            $invoice = mysqli_query($koneksi,"SELECT * from invoice");
+            <?php
+            $invoice = mysqli_query($koneksi, "SELECT * from invoice");
             $i = mysqli_num_rows($invoice);
             ?>
             <h4 style="font-weight: bolder"><?php echo $i ?></h4>
@@ -306,12 +293,10 @@
           </div>
           <div class="icon">
             <i class="ion ion-stats-bars"></i>
-          </div>  
+          </div>
         </div>
       </div>
     </div>
-
-
 
     <!-- /.row -->
     <div class="row">
@@ -358,9 +343,5 @@
   </section>
 
 </div>
-
-
-
-
 
 <?php include 'footer.php'; ?>

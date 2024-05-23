@@ -21,16 +21,16 @@
     <br>
 
     <div class="row">
-      <section class="col-lg-12">       
+      <section class="col-lg-12">
         <div class="box box-info">
 
           <div class="box-body" style="padding: 20px">
 
-            <?php 
+            <?php
             $id = $_GET['id'];
-            $invoice = mysqli_query($koneksi,"select * from invoice where invoice_id='$id'");
-            while($i = mysqli_fetch_array($invoice)){
-              ?>
+            $invoice = mysqli_query($koneksi, "select * from invoice where invoice_id='$id'");
+            while ($i = mysqli_fetch_array($invoice)) {
+            ?>
 
               <form action="penjualan_update.php" method="post" onSubmit="return cek(this)">
 
@@ -75,8 +75,7 @@
 
                 </div>
 
-                <hr>  
-
+                <hr>
 
                 <div class="row">
 
@@ -124,11 +123,11 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <?php 
-                                      $no=1;
-                                      $data = mysqli_query($koneksi,"SELECT * FROM produk, kategori where produk_kategori=kategori_id order by produk_id desc");
-                                      while($d = mysqli_fetch_array($data)){
-                                        ?>
+                                      <?php
+                                      $no = 1;
+                                      $data = mysqli_query($koneksi, "SELECT * FROM produk, kategori where produk_kategori=kategori_id order by produk_id desc");
+                                      while ($d = mysqli_fetch_array($data)) {
+                                      ?>
                                         <tr>
                                           <td><?php echo $no++; ?></td>
                                           <td><?php echo $d['produk_kode']; ?></td>
@@ -139,28 +138,27 @@
                                           </td>
                                           <td><?php echo $d['produk_satuan']; ?></td>
                                           <td><?php echo $d['produk_stok']; ?></td>
-                                          <td><?php echo "Rp.".number_format($d['produk_harga_jual']).",-"; ?></td>
+                                          <td><?php echo "Rp." . number_format($d['produk_harga_jual']) . ",-"; ?></td>
                                           <td><?php echo $d['produk_keterangan']; ?></td>
-                                          <td>              
-                                            <?php 
-                                            if($d['produk_stok'] > 0){
-                                              ?>          
+                                          <td>
+                                            <?php
+                                            if ($d['produk_stok'] > 0) {
+                                            ?>
                                               <input type="hidden" id="kode_<?php echo $d['produk_id']; ?>" value="<?php echo $d['produk_kode']; ?>">
                                               <input type="hidden" id="nama_<?php echo $d['produk_id']; ?>" value="<?php echo $d['produk_nama']; ?>">
                                               <input type="hidden" id="harga_<?php echo $d['produk_id']; ?>" value="<?php echo $d['produk_harga_jual']; ?>">
                                               <button type="button" class="btn btn-success btn-sm modal-pilih-produk" id="<?php echo $d['produk_id']; ?>" data-dismiss="modal">Pilih</button>
-                                              <?php 
+                                            <?php
                                             }
                                             ?>
                                           </td>
                                         </tr>
-                                        <?php 
+                                      <?php
                                       }
                                       ?>
                                     </tbody>
                                   </table>
                                 </div>
-
 
                               </div>
                             </div>
@@ -196,7 +194,6 @@
 
                   </div>
 
-
                   <div class="col-lg-9">
                     <h4>Daftar Pembelian</h4>
 
@@ -211,35 +208,35 @@
                           <th style="text-align: center;" width="1%">OPSI</th>
                         </tr>
                       </thead>
-                      <tbody> 
-                        <?php 
+                      <tbody>
+                        <?php
                         $id_invoice = $i['invoice_id'];
                         $x_jumlah = 0;
                         $x_harga = 0;
-                        $transaksi = mysqli_query($koneksi,"select * from transaksi,produk where produk_id=transaksi_produk and transaksi_invoice='$id_invoice'");
-                        while($t = mysqli_fetch_array($transaksi)){
-                          ?>
+                        $transaksi = mysqli_query($koneksi, "select * from transaksi,produk where produk_id=transaksi_produk and transaksi_invoice='$id_invoice'");
+                        while ($t = mysqli_fetch_array($transaksi)) {
+                        ?>
 
                           <tr id='tr_<?php echo $t['transaksi_produk'] ?>'>
-                            <td> 
-                              <input type='hidden' name='transaksi_produk[]' value='<?php echo $t['transaksi_produk'] ?>'> 
-                              <input type='hidden' name='transaksi_harga[]' value='<?php echo $t['transaksi_harga'] ?>'> 
-                              <input type='hidden' name='transaksi_jumlah[]' value='<?php echo $t['transaksi_jumlah'] ?>'> 
+                            <td>
+                              <input type='hidden' name='transaksi_produk[]' value='<?php echo $t['transaksi_produk'] ?>'>
+                              <input type='hidden' name='transaksi_harga[]' value='<?php echo $t['transaksi_harga'] ?>'>
+                              <input type='hidden' name='transaksi_jumlah[]' value='<?php echo $t['transaksi_jumlah'] ?>'>
                               <input type='hidden' name='transaksi_total[]' value='<?php echo $t['transaksi_total'] ?>'>
                               <?php echo $t['produk_kode']; ?>
                             </td>
                             <td><?php echo $t['produk_nama']; ?></td>
-                            <td align='center'><?php echo "Rp.".number_format($t['transaksi_harga']).",-"; ?></td>
+                            <td align='center'><?php echo "Rp." . number_format($t['transaksi_harga']) . ",-"; ?></td>
                             <td align='center'><?php echo number_format($t['transaksi_jumlah']); ?></td>
-                            <td align='center'><?php echo "Rp.".number_format($t['transaksi_total']).",-"; ?></td>
-                            <td align='center'> 
+                            <td align='center'><?php echo "Rp." . number_format($t['transaksi_total']) . ",-"; ?></td>
+                            <td align='center'>
                               <span class='btn btn-sm btn-danger tombol-hapus-penjualan' total='<?php echo $t['transaksi_total'] ?>' jumlah='<?php echo $t['transaksi_jumlah'] ?>' harga='<?php echo $t['transaksi_harga'] ?>' id='<?php echo $t['transaksi_produk'] ?>'><i class='fa fa-close'></i> Batal</span>
                             </td>
                           </tr>
 
-                          <?php 
-                          $x_jumlah+=$t['transaksi_jumlah'];
-                          $x_harga+=$t['transaksi_harga'];
+                        <?php
+                          $x_jumlah += $t['transaksi_jumlah'];
+                          $x_harga += $t['transaksi_harga'];
                         }
                         ?>
 
@@ -247,9 +244,9 @@
                       <tfoot>
                         <tr class="bg-info">
                           <td style="text-align: right;" colspan="2"><b>Total</b></td>
-                          <td style="text-align: center;"><span class="pembelian_harga" id="<?php echo $x_harga ?>"><?php echo "Rp".number_format($x_harga).",-" ?></span></td>
+                          <td style="text-align: center;"><span class="pembelian_harga" id="<?php echo $x_harga ?>"><?php echo "Rp" . number_format($x_harga) . ",-" ?></span></td>
                           <td style="text-align: center;"><span class="pembelian_jumlah" id="<?php echo $x_jumlah ?>"><?php echo number_format($x_jumlah) ?></span></td>
-                          <td style="text-align: center;"><span class="pembelian_total" id="<?php echo $i['invoice_total'] ?>"><?php echo "Rp".number_format($i['invoice_total']).",-" ?></span></td>
+                          <td style="text-align: center;"><span class="pembelian_total" id="<?php echo $i['invoice_total'] ?>"><?php echo "Rp" . number_format($i['invoice_total']) . ",-" ?></span></td>
                           <td style="text-align: center;"></td>
                         </tr>
                       </tfoot>
@@ -264,7 +261,7 @@
                             <th width="50%">Sub Total Pembelian</th>
                             <td>
                               <input type="hidden" name="sub_total" class="sub_total_form" value="<?php echo $i['invoice_sub_total']; ?>">
-                              <span class="sub_total_pembelian" id="<?php echo $i['invoice_sub_total']; ?>"><?php echo "Rp.".number_format($i['invoice_sub_total']).",-"; ?></span>
+                              <span class="sub_total_pembelian" id="<?php echo $i['invoice_sub_total']; ?>"><?php echo "Rp." . number_format($i['invoice_sub_total']) . ",-"; ?></span>
                             </td>
                           </tr>
                           <tr>
@@ -282,7 +279,7 @@
                             <th>Total Pembelian</th>
                             <td>
                               <input type="hidden" name="total" class="total_form" value="<?php echo $i['invoice_total']; ?>">
-                              <span class="total_pembelian" id="<?php echo $i['invoice_total']; ?>"><?php echo "Rp.".number_format($i['invoice_total']).",-"; ?></span>
+                              <span class="total_pembelian" id="<?php echo $i['invoice_total']; ?>"><?php echo "Rp." . number_format($i['invoice_total']) . ",-"; ?></span>
                             </td>
                           </tr>
                         </table>
@@ -306,7 +303,7 @@
 
               </form>
 
-              <?php 
+            <?php
             }
             ?>
 

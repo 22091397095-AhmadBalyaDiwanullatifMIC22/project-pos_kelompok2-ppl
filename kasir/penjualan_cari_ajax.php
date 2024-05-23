@@ -1,9 +1,9 @@
-<?php 
+<?php
 include '../koneksi.php';
 $kode  = $_POST['kode'];
-$produk = mysqli_query($koneksi,"select * from produk where produk_kode='$kode'")or die(mysqli_error($koneksi));
+$produk = mysqli_query($koneksi, "select * from produk where produk_kode='$kode'") or die(mysqli_error($koneksi));
 $jumlah = mysqli_num_rows($produk);
-if($jumlah == 1){
+if ($jumlah == 1) {
 	$p = mysqli_fetch_assoc($produk);
 	$return_arr = array();
 	$return_arr[] = array(
@@ -14,7 +14,7 @@ if($jumlah == 1){
 		"jumlah" => "1",
 	);
 	echo json_encode($return_arr);
-}elseif($jumlah == 0){
+} elseif ($jumlah == 0) {
 	$return_arr = array();
 	$return_arr[] = array(
 		"id" => "",
