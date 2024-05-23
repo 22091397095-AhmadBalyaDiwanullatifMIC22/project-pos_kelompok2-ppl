@@ -1,5 +1,5 @@
 <?php 
 
-$koneksi = mysqli_connect("localhost", "root", "" ,"project_pos1");
+$koneksi = mysqli_connect("localhost", "root", "" ,"project_pos");
 
 ?>
